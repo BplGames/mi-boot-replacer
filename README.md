@@ -11,17 +11,18 @@ This module utilizes systemless mount to mount the bootanimation files to the sp
 - Android 11+ (API 30+) running MIUI/HyperOS
 
 > [!WARNING]
-> This module is designed for Magisk. KernelSU and APatch are not fully supported and unexpected bugs may occur.
+> This module is tested on Magisk and KernelSU, while APatch is not fully supported and unexpected bugs may occur.
 > 
-> This module may also work on other phone brands with similar file structures, feel free to test it yourself but no support will be provided and functionality is not guaranteed.
+> This module can also work on other phone brands with same file structure, feel free to test it yourself but no support will be provided and functionality is not guaranteed.
 
 ## Tested Devices
 
-| Device | System Version | Status |
-|--------|----------------|:------:|
-| liuqin | V14.0.9.0.TMYCNXM (MIUI 14) | ✅ |
-| liuqin | OS2.0.203.0.VMYCNXM (HyperOS 2) | ✅ |
-| liuqin | OS2.0.212.0.VMYCNXM (HyperOS 2) | ✅ |
+| Device | System Version | Status | RM |
+|--------|----------------|:------:|------|
+| liuqin | V14.0.9.0.TMYCNXM | ✅ | Magisk |
+| liuqin | OS2.0.203.0.VMYCNXM | ✅ | Magisk |
+| liuqin | OS2.0.212.0.VMYCNXM | ✅ | Magisk |
+| liuqin | OS3.0.5.0.VMYCNXM | ✅ | Magisk / KSU + mountify |
 
 <details>
 <summary>Device Code Reference</summary>
