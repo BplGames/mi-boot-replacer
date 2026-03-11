@@ -13,7 +13,7 @@ This module utilizes systemless mount to mount the files, ensuring no modificati
 > [!WARNING]
 > This module can also work on other root managers with mounting function or phones with similar file structure, feel free to test it yourself but no support will be provided and functionality is not guaranteed.
 
-## Tested Devices
+## Test Records
 
 | Device | System Version | Status | RM |
 |--------|----------------|:------:|------|
@@ -226,9 +226,6 @@ To restore your original boot animation:
 1. **Simply disable or uninstall this module**
 2. **Reboot** your device
 
-> [!NOTE]
-> The module uses systemless mounting, so simply disabling it will automatically restore your original animations without manual file operations.
-
 ## To-Dos
 1. ~~Add GitHub Actions workflow for automated module building~~ (Done)
 2. ~~Auto detect and select path for corresponding models~~ (Probably not as device spoofer modules are commonly used)
@@ -250,7 +247,7 @@ You can use GitHub Actions to build a custom boot animation module without any l
 8. Download the built module from **Artifacts**
 
 > [!NOTE]
-> If there is no available template for your device, you must use Method 2 and upload your own bootanimation files.
+> If there is no matching template for your device, you must use [Method 2](#method-2-upload-custom-files) and upload your own bootanimation files.
 
 ### Method 2: Upload Custom Files
 
