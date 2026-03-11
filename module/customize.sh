@@ -226,13 +226,13 @@ if [ -f "$OLD_MODULE_DIR/module.prop" ]; then
 
   if [ "$MODULE_VER_CODE" -lt "$OLD_MODULE_VER_CODE" ]; then
     ui_print "! Downgrade detected!"
-    ui_print "! Cannot install v$MODULE_VER_CODE over v$OLD_MODULE_VER_CODE"
+    ui_print "! Cannot install $MODULE_VER_CODE over $OLD_MODULE_VER_CODE"
     ui_print "! Please uninstall the current version first or install a newer version"
     abort "*********************************************"
   elif [ "$MODULE_VER_CODE" -eq "$OLD_MODULE_VER_CODE" ]; then
     ui_print "- Same version detected, reinstalling..."
   else
-    ui_print "- Upgrading from v$OLD_MODULE_VER_CODE to v$MODULE_VER_CODE"
+    ui_print "- Upgrading from $OLD_MODULE_VER_CODE to $MODULE_VER_CODE"
   fi
   ui_print "*********************************************"
 fi
