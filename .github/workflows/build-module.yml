@@ -311,45 +311,34 @@ jobs:
           echo "  Version: $MODULE_VERSION"
           echo "  Author: $MODULE_AUTHOR"
 
-      - name: Create module ZIP
-        id: create_zip
+      - name: Prepare module artifact
+        id: prepare_artifact
         run: |
-          cd build/module
-
           MODULE_ID="${{ steps.module_info.outputs.module_id }}"
           MODULE_VERSION="${{ steps.module_info.outputs.module_version }}"
 
-          # Create a unique zip name with target location
+          # Create a unique artifact name with target location
           TARGET_SHORT=$(echo "${{ env.target_location }}" | sed 's|^/||' | tr '/' '-')
-          ZIP_NAME="${MODULE_ID}-${MODULE_VERSION}-${TARGET_SHORT}.zip"
-
-          # Artifact name
           ARTIFACT_NAME="${MODULE_ID}-${MODULE_VERSION}-${TARGET_SHORT}"
 
-          # Create ZIP with standard compression
-          echo "Creating module ZIP..."
-          zip -r "../$ZIP_NAME" . -x "*.git*"
+          # Calculate module size
+          MODULE_SIZE=$(du -sh build/module | cut -f1)
 
-          # Get zip size
-          ZIP_SIZE=$(du -h "../$ZIP_NAME" | cut -f1)
-
-          echo "zip_name=$ZIP_NAME" >> $GITHUB_OUTPUT
           echo "artifact_name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
-          echo "zip_size=$ZIP_SIZE" >> $GITHUB_OUTPUT
+          echo "module_size=$MODULE_SIZE" >> $GITHUB_OUTPUT
 
           echo ""
-          echo "Created: $ZIP_NAME ($ZIP_SIZE)"
+          echo "Module prepared: $ARTIFACT_NAME ($MODULE_SIZE)"
           echo ""
-          echo "ZIP contents:"
-          unzip -l "../$ZIP_NAME"
+          echo "Module contents:"
+          ls -laR build/module
 
       - name: Upload module artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.create_zip.outputs.artifact_name }}
-          path: build/${{ steps.create_zip.outputs.zip_name }}
+          name: ${{ steps.prepare_artifact.outputs.artifact_name }}
+          path: build/module
           retention-days: 90
-          compression-level: 0
 
       - name: Generate build summary
         run: |
@@ -374,8 +363,8 @@ jobs:
 
           | Property | Value |
           |----------|-------|
-          | **File** | \`${{ steps.create_zip.outputs.zip_name }}\` |
-          | **Size** | ${{ steps.create_zip.outputs.zip_size }} |
+          | **Artifact** | \`${{ steps.prepare_artifact.outputs.artifact_name }}.zip\` |
+          | **Size** | ${{ steps.prepare_artifact.outputs.module_size }} |
           | **Base Release** | ${{ steps.download_release.outputs.version }} |
           | **Source** | $SOURCE_DESC |
           | **Name** | ${{ steps.module_info.outputs.module_name }} |
@@ -397,18 +386,17 @@ jobs:
 
           cat << 'EOF' >> $GITHUB_STEP_SUMMARY
 
-          ## Download Instructions
+          ## Download & Installation
 
           1. Scroll down to the **Artifacts** section below
-          2. Click on the module ZIP file to download
-
-          ## Installation
-
-          1. Flash the downloaded module ZIP using:
+          2. Click on the artifact to download the module ZIP
+          3. Flash the downloaded ZIP directly using:
              - **Magisk Manager** → Modules → Install from storage
              - **KernelSU** → Module → Install
              - **APatch** → Module → Install
-          2. Reboot your device
+          4. Reboot your device
+
+          **Note:** Flash the downloaded file directly - no need to extract it first!
 
           ## Notes
 
